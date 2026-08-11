@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Lista de Supermercado</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 500px;
+    margin: 40px auto;
+    background: #f4f4f4;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    color: #333;
+  }
+  .formulario {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .formulario input {
+    flex: 1;
+    padding: 8px;
+  }
+  button {
+    padding: 8px 12px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #218838;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  li {
+    background: white;
+    margin-bottom: 6px;
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+  }
+  #total {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+  <h1>🛒 Lista de Supermercado</h1>
+
+  <!-- Formulario donde el usuario escribe los datos -->
+  <div class="formulario">
+    <input type="text" id="nombreProducto" placeholder="Producto">
+    <input type="number" id="cantidadProducto" placeholder="Cantidad" min="1">
+    <input type="number" id="precioProducto" placeholder="Precio" min="0">
+    <button onclick="agregarProducto()">Agregar</button>
+  </div>
+
+  <!-- Aquí se van a mostrar los productos agregados -->
+  <ul id="listaProductos"></ul>
+
+  <!-- Aquí se muestra el total -->
+  <div id="total">Total: $0</div>
+
+  <script>
+    // Variable que guarda el total acumulado
+    let total = 0;
+
+    // Función que se ejecuta al hacer click en el botón "Agregar"
+    function agregarProducto() {
+      // 1. Obtenemos los valores que el usuario escribió
+      const nombre = document.getElementById("nombreProducto").value;
+      const cantidad = document.getElementById("cantidadProducto").value;
+      const precio = document.getElementById("precioProducto").value;
+
+      // 2. Validamos que no estén vacíos
+      if (nombre === "" || cantidad === "" || precio === "") {
+        alert("Por favor completa todos los campos");
+        return; // detiene la función si falta algo
+      }
+
+      // 3. Calculamos el subtotal de este producto
+      const subtotal = cantidad * precio;
+
+      // 4. Creamos un elemento <li> nuevo para mostrarlo en la lista
+      const li = document.createElement("li");
+      li.textContent = nombre + " — Cantidad: " + cantidad + " — Precio: $" + precio;
+
+      // 5. Lo agregamos dentro del <ul>
+      document.getElementById("listaProductos").appendChild(li);
+
+      // 6. Sumamos el subtotal al total general
+      total = total + Number(subtotal);
+
+      // 7. Actualizamos el texto del total en pantalla
+      document.getElementById("total").textContent = "Total: $" + total;
+
+      // 8. Limpiamos los campos del formulario para el siguiente producto
+      document.getElementById("nombreProducto").value = "";
+      document.getElementById("cantidadProducto").value = "";
+      document.getElementById("precioProducto").value = "";
+    }
+  </script>
+
+</body>
+</html>
